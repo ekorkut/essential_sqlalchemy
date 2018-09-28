@@ -1,6 +1,6 @@
 #!/opt/bb/bin/python
 
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, inspect
 from datetime import datetime
 
 metadata = MetaData()
@@ -34,13 +34,10 @@ orders = Table('orders', metadata,
 line_items = Table('line_items', metadata,
                    Column('line_items_id', Integer(), primary_key=True),
                    Column('order_id', ForeignKey('orders.order_id')),
-                   Column('cookie_id', ForeignKey('users.user_id')),
+                   Column('cookie_id', ForeignKey('cookies.cookie_id')),
                    Column('quantity', Integer()),
                    Column('extended_cost', Numeric(12,2))
 )
 
 engine = create_engine('sqlite:///:memory:')
 metadata.create_all(engine)
-
-
-
